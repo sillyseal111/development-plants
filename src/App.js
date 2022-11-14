@@ -1,23 +1,21 @@
-import logo from './logo.svg';
 import './App.css';
+import FilteredList from './FilteredList';
 
 function App() {
+
+  const productList = [
+    { name: "Cute Plant", size: "Medium"},
+    { name: "Happy Plant", size: "Large"},
+    { name: "Sad Plant", size: "Desktop"},
+    { name: "Smart Plant", size: "Medium"},
+    { name: "Sleepy Plant", size: "Desktop"}
+   ]
+   
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Hello</h1>
+      {/* <FilteredList list={productList} /> */}
     </div>
   );
 }
