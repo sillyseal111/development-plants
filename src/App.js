@@ -17,7 +17,7 @@ function App() {
     { name: "Sleepy Plant", size: "Desktop"}
    ]
 
-   function Plant(props) {
+   const Plant = props => {
     return (
       <Card style={{ width: '18rem' }}>
       <Card.Body>
@@ -25,19 +25,44 @@ function App() {
         <Card.Text>
           {props.size}
         </Card.Text>
-        <Button variant="success">Add to cart</Button>
+        <Button onClick={addToCart}variant="success">Add to cart</Button>
       </Card.Body>
       </Card>
     );
    }
 
-   function selectFilterType() {
-
+   const addToCart = () => {
+    console.log("addded!");
    }
 
-  return (
-    <div className="App">
-      <h1>Plants!</h1>
+   const selectFilterType = eventKey => {
+    setType(eventKey);
+   }
+   
+   const matchesFilterType = item => {
+    console.log(type)
+    if (type === "All") {
+      return true
+    } else if (type === item.size) {
+      return true
+    } else {
+      return false
+    }
+   }
+
+   const FinalFilter = (props) => {
+    return (
+      <div>
+        {props.plants.map((item) => (
+          <Plant name = {item.name}
+          size = {item.size} />
+        ))}
+      </div>
+    );
+   }
+
+   const FilterItems = () => {
+    return (
       <Nav>
         <Nav.Item>
           <Nav.Link eventKey="All" onSelect={selectFilterType}>All</Nav.Link>
@@ -52,11 +77,16 @@ function App() {
           <Nav.Link eventKey="Desktop" onSelect={selectFilterType}>Desktop</Nav.Link>
         </Nav.Item>
       </Nav>
-      
-      {plantList.map((item) => (
-        <Plant name = {item.name}
-        size = {item.size} />
-      ))}
+    )
+   }
+
+   const filteredList = plantList.filter(matchesFilterType)
+
+  return (
+    <div className="App">
+      <h1>Plants!</h1>
+      <FilterItems/>
+      <FinalFilter plants={filteredList}/>
     </div>
   );
 }
