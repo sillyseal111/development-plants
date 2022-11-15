@@ -32,7 +32,7 @@ function App() {
    }
 
    const addToCart = () => {
-    console.log("addded!");
+    console.log("added!");
    }
 
    const selectFilterType = eventKey => {
