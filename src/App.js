@@ -25,7 +25,7 @@ function App() {
         <Card.Text>
           {props.size}
         </Card.Text>
-        <Button onClick={addToCart}variant="success">Add to cart</Button>
+        <Button onClick={addToCart} variant="success">Add to cart</Button>
       </Card.Body>
       </Card>
     );
@@ -35,11 +35,12 @@ function App() {
     console.log("added!");
    }
 
-   const selectFilterType = eventKey => {
+   const selectFilterType = (eventKey) => {
     setType(eventKey);
+    console.log(type);
    }
    
-   const matchesFilterType = item => {
+   const matchesFilterType = (item) => {
     console.log(type)
     if (type === "All") {
       return true
@@ -53,28 +54,28 @@ function App() {
    const FinalFilter = (props) => {
     return (
       <div>
-        {props.plants.map((item) => (
-          <Plant name = {item.name}
+        {props.plants.map((item, index) => (
+          <Plant key={index} name = {item.name}
           size = {item.size} />
         ))}
       </div>
     );
    }
 
-   const FilterItems = () => {
+   const FilterNav = () => {
     return (
-      <Nav>
+      <Nav onSelect={selectFilterType}>
         <Nav.Item>
-          <Nav.Link eventKey="All" onSelect={selectFilterType}>All</Nav.Link>
+          <Nav.Link eventKey="All" >All</Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link eventKey="Medium" onSelect={selectFilterType}>Medium</Nav.Link>
+          <Nav.Link eventKey="Medium">Medium</Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link eventKey="Large" onSelect={selectFilterType}>Large</Nav.Link>
+          <Nav.Link eventKey="Large">Large</Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link eventKey="Desktop" onSelect={selectFilterType}>Desktop</Nav.Link>
+          <Nav.Link eventKey="Desktop">Desktop</Nav.Link>
         </Nav.Item>
       </Nav>
     )
@@ -85,7 +86,7 @@ function App() {
   return (
     <div className="App">
       <h1>Plants!</h1>
-      <FilterItems/>
+      <FilterNav/>
       <FinalFilter plants={filteredList}/>
     </div>
   );
