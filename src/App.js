@@ -8,6 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 function App() {
 
   const [type, setType] = useState("All");
+  const [total, setTotal] = useState(0);
 
   const plantList = [
     { name: "Cute Plant", size: "Medium"},
@@ -32,16 +33,14 @@ function App() {
    }
 
    const addToCart = () => {
-    console.log("added!");
+    setTotal(total + 1);
    }
 
    const selectFilterType = (eventKey) => {
     setType(eventKey);
-    console.log(type);
    }
    
    const matchesFilterType = (item) => {
-    console.log(type)
     if (type === "All") {
       return true
     } else if (type === item.size) {
@@ -80,14 +79,30 @@ function App() {
       </Nav>
     )
    }
-
+   
+   const Cart = () => {
+    return (
+      <div>
+        <h2>Your Cart</h2>
+        <h3>Total : {total}</h3>
+      </div>
+    );
+   }
    const filteredList = plantList.filter(matchesFilterType)
 
   return (
     <div className="App">
       <h1>Plants!</h1>
       <FilterNav/>
-      <FinalFilter plants={filteredList}/>
+      <div className="d-flex">
+        <div>
+          <Cart/>
+        </div>
+        <div>
+          <FinalFilter plants={filteredList}/>
+        </div>
+      </div>
+      
     </div>
   );
 }
