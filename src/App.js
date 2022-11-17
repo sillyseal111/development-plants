@@ -9,22 +9,33 @@ function App() {
 
   const [type, setType] = useState("All");
   const [total, setTotal] = useState(0);
+  const [cart, setCart] = useState([]);
+  const [sortby, setSortby] = useState("height");
 
   const plantList = [
-    { name: "Cute Plant", size: "Medium"},
-    { name: "Happy Plant", size: "Large"},
-    { name: "Sad Plant", size: "Desktop"},
-    { name: "Smart Plant", size: "Medium"},
-    { name: "Sleepy Plant", size: "Desktop"}
+    { name: "Cute Plant", size: "Medium", height: 1, sunlight: 1, price:7.25, setting:"Indoor"},
+    { name: "Happy Plant", size: "Large", height: 2, sunlight: 2, price: 3.50, setting: "Outdoor"},
+    { name: "Sad Plant", size: "Desktop", height: 3, sunlight: 3, price: 4.50, setting: "Indoor"},
+    { name: "Smart Plant", size: "Medium", height: 1, sunlight: 2, price: 5.75, setting: "Outdoor"},
+    { name: "Sleepy Plant", size: "Desktop", height: 3, sunlight: 1, price: 6.25, setting: "Indoor"}
    ]
 
    const Plant = props => {
+    const addToCart = () => {
+      setCart([...cart, "1x ", props.name, " ", props.price, <br></br>]);
+      setTotal(total+props.price);
+     }
+
     return (
       <Card style={{ width: '18rem' }}>
       <Card.Body>
         <Card.Title>{props.name}</Card.Title>
         <Card.Text>
-          {props.size}
+          <p>{props.size}</p>
+          <p>Height: {props.height}'</p>
+          <p>Sunlight level: {props.sunlight}</p>
+          <p>{props.setting}</p>
+          <h6>Price: ${props.price}</h6>
         </Card.Text>
         <Button onClick={addToCart} variant="success">Add to cart</Button>
       </Card.Body>
@@ -32,33 +43,55 @@ function App() {
     );
    }
 
-   const addToCart = () => {
-    setTotal(total + 1);
-   }
-
    const selectFilterType = (eventKey) => {
     setType(eventKey);
+   }
+
+   const selectSortType = (eventKey) => {
+    setSortby(eventKey);
    }
    
    const matchesFilterType = (item) => {
     if (type === "All") {
       return true
-    } else if (type === item.size) {
+    } else if (type === item.size || type === item.setting) {
       return true
     } else {
       return false
     }
    }
 
+   const sortPlants = (a,b) => {
+    if (sortby === "height") {
+      return a.height - b.height
+    } else {
+      return a.sunlight - b.sunlight;
+    }
+    
+   }
+
    const FinalFilter = (props) => {
     return (
       <div>
         {props.plants.map((item, index) => (
-          <Plant key={index} name = {item.name}
-          size = {item.size} />
+          <Plant key={index} name = {item.name} height={item.height}
+          sunlight={item.sunlight} size = {item.size} price={item.price} setting={item.setting}/>
         ))}
       </div>
     );
+   }
+
+   const SortNav = () => {
+    return (
+      <Nav onSelect={selectSortType}>
+        <Nav.Item>
+          <Nav.Link eventKey="height" >Height</Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link eventKey="sunlight">Sunlight</Nav.Link>
+        </Nav.Item>
+      </Nav>
+    )
    }
 
    const FilterNav = () => {
@@ -76,30 +109,43 @@ function App() {
         <Nav.Item>
           <Nav.Link eventKey="Desktop">Desktop</Nav.Link>
         </Nav.Item>
+        <Nav.Item>
+          <Nav.Link eventKey="Indoor">Indoor</Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link eventKey="Outdoor">Outdoor</Nav.Link>
+        </Nav.Item>
       </Nav>
     )
    }
    
    const Cart = () => {
     return (
-      <div>
-        <h2>Your Cart</h2>
-        <h3>Total : {total}</h3>
-      </div>
+      <Card style={{ width: '18rem' }}>
+      <Card.Body>
+        <Card.Title>Your Cart</Card.Title>
+        <Card.Text>
+          <h6>{ cart }</h6>
+          <hr/>
+          <h3> Total : ${total}</h3>
+        </Card.Text>
+      </Card.Body>
+      </Card>
     );
    }
-   const filteredList = plantList.filter(matchesFilterType)
+   const filteredList = plantList.filter(matchesFilterType).sort(sortPlants);
 
   return (
     <div className="App">
       <h1>Plants!</h1>
       <FilterNav/>
+      <SortNav/>
       <div className="d-flex">
         <div>
-          <Cart/>
+          <FinalFilter plants={filteredList}/>
         </div>
         <div>
-          <FinalFilter plants={filteredList}/>
+          <Cart/>
         </div>
       </div>
       
