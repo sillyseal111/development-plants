@@ -2,7 +2,10 @@ import './App.css';
 import { useState } from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
+import { ButtonGroup } from 'react-bootstrap';
+import ToggleButton from 'react-bootstrap/ToggleButton';
 import Nav from 'react-bootstrap/Nav';
+import Form from 'react-bootstrap/Form';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
@@ -13,9 +16,9 @@ function App() {
   const [sortby, setSortby] = useState("height");
 
   const plantList = [
-    { name: "Cute Plant", size: "Medium", height: 1, sunlight: 1, price:7.25, setting:"Indoor"},
+    { name: "Cute Plant", size: "Medium", height: 1, sunlight: 3, price:7.25, setting:"Indoor"},
     { name: "Happy Plant", size: "Large", height: 2, sunlight: 2, price: 3.50, setting: "Outdoor"},
-    { name: "Sad Plant", size: "Desktop", height: 3, sunlight: 3, price: 4.50, setting: "Indoor"},
+    { name: "Sad Plant", size: "Desktop", height: 3, sunlight: 1, price: 4.50, setting: "Indoor"},
     { name: "Smart Plant", size: "Medium", height: 1, sunlight: 2, price: 5.75, setting: "Outdoor"},
     { name: "Sleepy Plant", size: "Desktop", height: 3, sunlight: 1, price: 6.25, setting: "Indoor"}
    ]
@@ -83,39 +86,81 @@ function App() {
 
    const SortNav = () => {
     return (
-      <Nav onSelect={selectSortType}>
+      <div>
+        <h5>Sort by:</h5>
+        <Nav onSelect={selectSortType}>
         <Nav.Item>
           <Nav.Link eventKey="height" >Height</Nav.Link>
         </Nav.Item>
         <Nav.Item>
           <Nav.Link eventKey="sunlight">Sunlight</Nav.Link>
         </Nav.Item>
-      </Nav>
+        </Nav>
+      </div>
+      
     )
    }
 
+  // const SortNav = () => {
+  //   const [radioValue, setRadioValue] = useState('1');
+
+  //   const radios = [
+  //     { name: 'Height', value: 'height' },
+  //     { name: 'Sunlight', value: 'sunlight' }
+  //   ];
+
+  //   const handleChange = (e) => {
+  //     setRadioValue(e.currentTarget.value);
+  //     selectSortType(e.currentTarget.value);
+
+  //   }
+  //   return (
+  //     <div>
+  //       <h5>Sort by: </h5>
+  //       <ButtonGroup className="mr-4">
+  //       {radios.map((radio, idx) => (
+  //         <ToggleButton
+  //           key={idx}
+  //           id={`radio-${idx}`}
+  //           type="radio"
+  //           variant="secondary"
+  //           value={radio.value}
+  //           checked={radioValue === radio.value}
+  //           onChange={handleChange}
+  //         >
+  //           {radio.name}
+  //         </ToggleButton>
+  //       ))}
+  //     </ButtonGroup>
+  //     </div>
+  //   );
+  //  }
+
    const FilterNav = () => {
     return (
-      <Nav onSelect={selectFilterType}>
-        <Nav.Item>
-          <Nav.Link eventKey="All" >All</Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link eventKey="Medium">Medium</Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link eventKey="Large">Large</Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link eventKey="Desktop">Desktop</Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link eventKey="Indoor">Indoor</Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link eventKey="Outdoor">Outdoor</Nav.Link>
-        </Nav.Item>
-      </Nav>
+      <div>
+        <h5>Filter by: </h5>
+        <Nav onSelect={selectFilterType}>
+          <Nav.Item>
+            <Nav.Link eventKey="All" >All</Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link eventKey="Medium">Medium</Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link eventKey="Large">Large</Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link eventKey="Desktop">Desktop</Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link eventKey="Indoor">Indoor</Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link eventKey="Outdoor">Outdoor</Nav.Link>
+          </Nav.Item>
+        </Nav>
+      </div>
     )
    }
    
