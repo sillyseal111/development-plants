@@ -4,13 +4,12 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import { ButtonGroup } from 'react-bootstrap';
 import ToggleButton from 'react-bootstrap/ToggleButton';
-import Nav from 'react-bootstrap/Nav';
-import Form from 'react-bootstrap/Form';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
 
-  const [type, setType] = useState("All");
+  const [size, setSize] = useState("All");
+  const [setting, setSetting] = useState("All");
   const [total, setTotal] = useState(0);
   const [cart, setCart] = useState([]);
   const [sortby, setSortby] = useState("height");
@@ -46,23 +45,43 @@ function App() {
     );
    }
 
-   const selectFilterType = (eventKey) => {
-    setType(eventKey);
-   }
+  const selectAllFilters = (eventKey) => {
+    setSize(eventKey.target.value);
+    setSetting(eventKey.target.value);
+  }
+  const selectFilterSize = (eventKey) => {
+    setSize(eventKey.target.value);
+  }
 
-   const selectSortType = (eventKey) => {
-    setSortby(eventKey);
-   }
-   
-   const matchesFilterType = (item) => {
-    if (type === "All") {
+  const selectFilterSetting = (eventKey) => {
+    setSetting(eventKey.target.value);
+  }
+
+  const selectSortType = (eventKey) => {
+    setSortby(eventKey.target.value);
+  }
+
+  const matchesFilterSize = (item) => {
+    if (size === "All") {
       return true
-    } else if (type === item.size || type === item.setting) {
+    } else if (size === item.size) {
       return true
     } else {
       return false
     }
    }
+
+   const matchesFilterSetting = (item) => {
+    if (setting === "All") {
+      return true
+    } else if (setting === item.setting) {
+      return true
+    } else {
+      return false
+    }
+   }
+
+  
 
    const sortPlants = (a,b) => {
     if (sortby === "height") {
@@ -74,95 +93,73 @@ function App() {
    }
 
    const FinalFilter = (props) => {
-    return (
-      <div>
-        {props.plants.map((item, index) => (
-          <Plant key={index} name = {item.name} height={item.height}
-          sunlight={item.sunlight} size = {item.size} price={item.price} setting={item.setting}/>
-        ))}
-      </div>
-    );
+    if (props.plants.length > 0) {
+      return (
+        <div>
+          {props.plants.map((item, index) => (
+            <Plant key={index} name = {item.name} height={item.height}
+            sunlight={item.sunlight} size = {item.size} price={item.price} setting={item.setting}/>
+          ))}
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <h6>No plants match your criteria :(</h6>
+        </div>
+      )
+    }
+    
    }
 
-   const SortNav = () => {
+  const SortNav = () => {
     return (
       <div>
         <h5>Sort by:</h5>
-        <Nav onSelect={selectSortType}>
-        <Nav.Item>
-          <Nav.Link eventKey="height" >Height</Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link eventKey="sunlight">Sunlight</Nav.Link>
-        </Nav.Item>
-        </Nav>
+        <div>
+        <input type="radio" id="height" name="sortby" 
+          value="height" checked={sortby === "height"} onChange={selectSortType}/>
+        <label for="height">Height</label>
+        <input type="radio" id="sunlight" name="sortby" 
+          value="sunlight" checked={sortby === "sunlight"} onChange={selectSortType}/>
+        <label for="sunlight">Sunlight</label>
+      </div>
       </div>
       
     )
-   }
+  }
 
-  // const SortNav = () => {
-  //   const [radioValue, setRadioValue] = useState('1');
-
-  //   const radios = [
-  //     { name: 'Height', value: 'height' },
-  //     { name: 'Sunlight', value: 'sunlight' }
-  //   ];
-
-  //   const handleChange = (e) => {
-  //     setRadioValue(e.currentTarget.value);
-  //     selectSortType(e.currentTarget.value);
-
-  //   }
-  //   return (
-  //     <div>
-  //       <h5>Sort by: </h5>
-  //       <ButtonGroup className="mr-4">
-  //       {radios.map((radio, idx) => (
-  //         <ToggleButton
-  //           key={idx}
-  //           id={`radio-${idx}`}
-  //           type="radio"
-  //           variant="secondary"
-  //           value={radio.value}
-  //           checked={radioValue === radio.value}
-  //           onChange={handleChange}
-  //         >
-  //           {radio.name}
-  //         </ToggleButton>
-  //       ))}
-  //     </ButtonGroup>
-  //     </div>
-  //   );
-  //  }
-
-   const FilterNav = () => {
+  const FilterNav = () => {
     return (
       <div>
         <h5>Filter by: </h5>
-        <Nav onSelect={selectFilterType}>
-          <Nav.Item>
-            <Nav.Link eventKey="All" >All</Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link eventKey="Medium">Medium</Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link eventKey="Large">Large</Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link eventKey="Desktop">Desktop</Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link eventKey="Indoor">Indoor</Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link eventKey="Outdoor">Outdoor</Nav.Link>
-          </Nav.Item>
-        </Nav>
+          <input type="radio" id="All" name="filters" 
+          value="All" checked={size === "All" && setting === "All"} onChange={selectAllFilters}/>
+          <label for="All">All</label>
+        <h6>Size:</h6>
+        <div>
+          <input type="radio" id="Medium" name="sizeFilter" 
+          value="Medium" checked={size==="Medium"} onChange={selectFilterSize}/>
+          <label for="Medium">Medium</label>
+          <input type="radio" id="Large" name="sizeFilter" 
+          value="Large" checked={size==="Large"}onChange={selectFilterSize}/>
+          <label for="Large">Large</label>
+          <input type="radio" id="Desktop" name="sizeFilter" 
+          value="Desktop" checked={size==="Desktop"}onChange={selectFilterSize}/>
+          <label for="Desktop">Desktop</label>
+        </div>
+        <h6>Setting:</h6>
+        <div>
+          <input type="radio" id="Indoor" name="settingFilter" 
+          value="Indoor" checked={setting==="Indoor"}onChange={selectFilterSetting}/>
+          <label for="Indoor">Indoor</label>
+          <input type="radio" id="Outdoor" name="settingFilter" 
+          value="Outdoor" checked={setting==="Outdoor"}onChange={selectFilterSetting}/>
+          <label for="Outdoor">Outdoor</label>
+        </div>
       </div>
     )
-   }
+  }
    
    const Cart = () => {
     return (
@@ -178,21 +175,30 @@ function App() {
       </Card>
     );
    }
-   const filteredList = plantList.filter(matchesFilterType).sort(sortPlants);
+
+  const firstList = plantList.filter(matchesFilterSize);
+  const finalList = firstList.filter(matchesFilterSetting);
+  finalList.sort(sortPlants);
 
   return (
     <div className="App">
       <h1>Plants!</h1>
-      <FilterNav/>
-      <SortNav/>
-      <div className="d-flex">
+      
+      <div className="d-flex align-items-start">
         <div>
-          <FinalFilter plants={filteredList}/>
+          <div>
+          <FilterNav/>
+          <SortNav/>
+          </div>
+          <div>
+            <Cart/>
+          </div>
         </div>
         <div>
-          <Cart/>
+          <FinalFilter plants={finalList}/>
         </div>
       </div>
+      
       
     </div>
   );
