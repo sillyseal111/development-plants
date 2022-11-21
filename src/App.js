@@ -2,8 +2,6 @@ import './App.css';
 import { useState } from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
-import { ButtonGroup } from 'react-bootstrap';
-import ToggleButton from 'react-bootstrap/ToggleButton';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
@@ -12,20 +10,30 @@ function App() {
   const [setting, setSetting] = useState("All");
   const [total, setTotal] = useState(0);
   const [cart, setCart] = useState([]);
+  const [plants, setPlants] = useState([]);
   const [sortby, setSortby] = useState("height");
 
   const plantList = [
-    { name: "Cute Plant", size: "Medium", height: 1, sunlight: 3, price:7.25, setting:"Indoor"},
-    { name: "Happy Plant", size: "Large", height: 2, sunlight: 2, price: 3.50, setting: "Outdoor"},
-    { name: "Sad Plant", size: "Desktop", height: 3, sunlight: 1, price: 4.50, setting: "Indoor"},
-    { name: "Smart Plant", size: "Medium", height: 1, sunlight: 2, price: 5.75, setting: "Outdoor"},
-    { name: "Sleepy Plant", size: "Desktop", height: 3, sunlight: 1, price: 6.25, setting: "Indoor"}
+    { name: "Cute Plant", size: "Medium", height: 1, sunlight: 3, price:7.25, setting:"Indoor", count: 1},
+    { name: "Happy Plant", size: "Large", height: 2, sunlight: 2, price: 3.50, setting: "Outdoor", count: 1},
+    { name: "Sad Plant", size: "Desktop", height: 3, sunlight: 1, price: 4.50, setting: "Indoor", count: 1},
+    { name: "Smart Plant", size: "Medium", height: 1, sunlight: 2, price: 5.75, setting: "Outdoor", count: 1},
+    { name: "Sleepy Plant", size: "Desktop", height: 3, sunlight: 1, price: 6.25, setting: "Indoor", count: 1}
    ]
 
-   const Plant = props => {
+   const Plant = (props) => {
+
     const addToCart = () => {
-      setCart([...cart, "1x ", props.name, " ", props.price, <br></br>]);
-      setTotal(total+props.price);
+      if (plants.indexOf(props.name) == -1) {
+        setCart([...cart, props])
+        setPlants([...plants, props.name, props.count])
+      } else {
+        const newCount = plants[plants.indexOf(props.name) + 1] + 1
+        plants[plants.indexOf(props.name) + 1] += 1
+        console.log(newCount)
+      }
+      
+      setTotal(total+props.price)
      }
 
     return (
@@ -97,7 +105,7 @@ function App() {
       return (
         <div>
           {props.plants.map((item, index) => (
-            <Plant key={index} name = {item.name} height={item.height}
+            <Plant key={index} count={item.count} name = {item.name} height={item.height}
             sunlight={item.sunlight} size = {item.size} price={item.price} setting={item.setting}/>
           ))}
         </div>
@@ -167,13 +175,33 @@ function App() {
       <Card.Body>
         <Card.Title>Your Cart</Card.Title>
         <Card.Text>
-          <h6>{ cart }</h6>
+          {/* <h6>{ cart }</h6> */}
+          <h6>
+          {cart.map((item, index) => (
+            <CartItem key={index} count={item.count} name={item.name} price={item.price}/>
+          ))}
+          </h6>
           <hr/>
           <h3> Total : ${total}</h3>
         </Card.Text>
       </Card.Body>
       </Card>
     );
+   }
+
+   const increment = (eventKey) => {
+    plants[plants.indexOf(eventKey.target.value) + 1] += 1
+    console.log("hello")
+   }
+
+   const CartItem = (props) => {
+    return (
+      <div className='d-flex'>
+        <Button>-</Button>
+        <h6>{plants[plants.indexOf(props.name) + 1]}x {props.name} ${props.price}</h6>
+        <Button value={props.name} onClick={increment}>+</Button>
+      </div>
+    )
    }
 
   const firstList = plantList.filter(matchesFilterSize);
