@@ -14,11 +14,11 @@ function App() {
   const [sortby, setSortby] = useState("height");
 
   const plantList = [
-    { name: "Cute Plant", size: "Medium", height: 1, sunlight: 3, price:7.25, setting:"Indoor", count: 1},
-    { name: "Happy Plant", size: "Large", height: 2, sunlight: 2, price: 3.50, setting: "Outdoor", count: 1},
-    { name: "Sad Plant", size: "Desktop", height: 3, sunlight: 1, price: 4.50, setting: "Indoor", count: 1},
-    { name: "Smart Plant", size: "Medium", height: 1, sunlight: 2, price: 5.75, setting: "Outdoor", count: 1},
-    { name: "Sleepy Plant", size: "Desktop", height: 3, sunlight: 1, price: 6.25, setting: "Indoor", count: 1}
+    { name: "Cute Plant", size: "Medium", height: 1, sunlight: 3, price:7.25, setting:"Indoor", count: 0},
+    { name: "Happy Plant", size: "Large", height: 2, sunlight: 2, price: 3.50, setting: "Outdoor", count: 0},
+    { name: "Sad Plant", size: "Desktop", height: 3, sunlight: 1, price: 4.50, setting: "Indoor", count: 0},
+    { name: "Smart Plant", size: "Medium", height: 1, sunlight: 2, price: 5.75, setting: "Outdoor", count: 0},
+    { name: "Sleepy Plant", size: "Desktop", height: 3, sunlight: 1, price: 6.25, setting: "Indoor", count: 0}
    ]
 
    const Plant = (props) => {
@@ -26,7 +26,7 @@ function App() {
     const addToCart = () => {
       if (plants.indexOf(props.name) == -1) {
         setCart([...cart, props])
-        setPlants([...plants, props.name, props.count])
+        setPlants([...plants, props.name, props.count + 1])
       } else {
         const newCount = plants[plants.indexOf(props.name) + 1] + 1
         plants[plants.indexOf(props.name) + 1] += 1
@@ -34,6 +34,7 @@ function App() {
       }
       
       setTotal(total+props.price)
+      console.log(plants)
      }
 
     return (
@@ -191,13 +192,34 @@ function App() {
 
    const increment = (eventKey) => {
     plants[plants.indexOf(eventKey.target.value) + 1] += 1
-    console.log("hello")
+    // I'm not entirely sure why, but without this 
+    // line the amount in cart does not update visually ??
+    const newPlants = plants.filter((plant) => plant.name !== eventKey.target.value)
+    setPlants(newPlants)
+   }
+
+   const decrement = (eventKey) => {
+    // Do not want to plant counts to go below zero
+    if (plants[plants.indexOf(eventKey.target.value) + 1] > 0) {
+      plants[plants.indexOf(eventKey.target.value) + 1] -= 1
+      // I'm not entirely sure why, but without this 
+      // line the amount in cart does not update visually ??
+      const newPlants = plants.filter((plant) => plant.name !== eventKey.target.value)
+      setPlants(newPlants)
+    }
+    // Remove plant from cart (and plants list) if it has reached zero
+    if (plants[plants.indexOf(eventKey.target.value) + 1] == 0) {
+      const newCart = cart.filter((plant) => plant.name !== eventKey.target.value)
+      setCart(newCart)
+      const newPlants = plants.filter((plant) => plant !== eventKey.target.value)
+      setPlants(newPlants)
+    }
    }
 
    const CartItem = (props) => {
     return (
       <div className='d-flex'>
-        <Button>-</Button>
+        <Button value={props.name} onClick={decrement}>-</Button>
         <h6>{plants[plants.indexOf(props.name) + 1]}x {props.name} ${props.price}</h6>
         <Button value={props.name} onClick={increment}>+</Button>
       </div>
