@@ -104,7 +104,7 @@ function App() {
    const FinalFilter = (props) => {
     if (props.plants.length > 0) {
       return (
-        <div>
+        <div className='d-flex flex-wrap px-4'>
           {props.plants.map((item, index) => (
             <Plant key={index} count={item.count} name = {item.name} height={item.height}
             sunlight={item.sunlight} size = {item.size} price={item.price} setting={item.setting}/>
@@ -125,7 +125,7 @@ function App() {
     return (
       <div>
         <h5>Sort by:</h5>
-        <div>
+        <div className='d-flex'>
         <input type="radio" id="height" name="sortby" 
           value="height" checked={sortby === "height"} onChange={selectSortType}/>
         <label for="height">Height</label>
@@ -146,7 +146,7 @@ function App() {
           value="All" checked={size === "All" && setting === "All"} onChange={selectAllFilters}/>
           <label for="All">All</label>
         <h6>Size:</h6>
-        <div>
+        <div className='d-flex'>
           <input type="radio" id="Medium" name="sizeFilter" 
           value="Medium" checked={size==="Medium"} onChange={selectFilterSize}/>
           <label for="Medium">Medium</label>
@@ -158,7 +158,7 @@ function App() {
           <label for="Desktop">Desktop</label>
         </div>
         <h6>Setting:</h6>
-        <div>
+        <div className='d-flex'>
           <input type="radio" id="Indoor" name="settingFilter" 
           value="Indoor" checked={setting==="Indoor"}onChange={selectFilterSetting}/>
           <label for="Indoor">Indoor</label>
@@ -258,21 +258,19 @@ function App() {
   return (
     <div className="App">
       <h1>Plants!</h1>
-      
-      <div className="d-flex align-items-start">
+      <div className='d-flex'>
         <div>
-          <div>
           <FilterNav/>
           <SortNav/>
-          </div>
-          <div>
-            <Cart/>
-          </div>
         </div>
-        <div>
-          <FinalFilter plants={finalList}/>
-        </div>
+      
+      <FinalFilter plants={finalList}/>
+      <div className='ms-auto'>
+        <Cart/>
       </div>
+      
+      </div>
+      
       
       
     </div>
