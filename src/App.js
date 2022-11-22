@@ -216,6 +216,12 @@ function App() {
     // line the amount in cart does not update visually ??
     const newPlants = plants.filter((plant) => plant.name !== eventKey.target.value)
     setPlants(newPlants)
+    cart.map((plant) => {
+      if (plant.name === eventKey.target.value) {
+        setTotal(total + plant.price)
+      }
+    })
+    console.log(cart)
    }
 
    const decrement = (eventKey) => {
@@ -226,6 +232,11 @@ function App() {
       // line the amount in cart does not update visually ??
       const newPlants = plants.filter((plant) => plant.name !== eventKey.target.value)
       setPlants(newPlants)
+      cart.map((plant) => {
+        if (plant.name === eventKey.target.value) {
+          setTotal(total - plant.price)
+        }
+      })
     }
     // Remove plant from cart (and plants list) if it has reached zero
     if (plants[plants.indexOf(eventKey.target.value) + 1] == 0) {
