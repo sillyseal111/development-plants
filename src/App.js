@@ -171,23 +171,43 @@ function App() {
   }
    
    const Cart = () => {
-    return (
-      <Card style={{ width: '20rem' }}>
-      <Card.Body>
-        <Card.Title>Your Cart</Card.Title>
-        <Card.Text>
-          {/* <h6>{ cart }</h6> */}
-          <h6>
-          {cart.map((item, index) => (
-            <CartItem key={index} count={item.count} name={item.name} price={item.price}/>
-          ))}
-          </h6>
-          <hr/>
-          <h3> Total : ${total}</h3>
-        </Card.Text>
-      </Card.Body>
-      </Card>
-    );
+    if (cart.length > 0) {
+      return (
+        <Card style={{ width: '20rem' }}>
+        <Card.Body>
+          <Card.Title>Your Cart</Card.Title>
+          <Card.Text>
+            {/* <h6>{ cart }</h6> */}
+            <h6>
+            {cart.map((item, index) => (
+              <div className='p-3'>
+                <CartItem key={index} count={item.count} name={item.name} price={item.price}/>
+              </div>
+              
+            ))}
+            </h6>
+            <hr/>
+            <h3> Total : ${total}</h3>
+          </Card.Text>
+        </Card.Body>
+        </Card>
+      );
+    } else {
+      return (
+        <Card style={{ width: '20rem' }}>
+        <Card.Body>
+          <Card.Title>Your Cart</Card.Title>
+          <Card.Text>
+            {/* <h6>{ cart }</h6> */}
+            <p> Your cart is currently empty.</p>
+            <hr/>
+            <h3> Total : ${total}</h3>
+          </Card.Text>
+        </Card.Body>
+        </Card>
+      );
+    }
+    
    }
 
    const increment = (eventKey) => {
