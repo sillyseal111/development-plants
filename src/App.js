@@ -172,7 +172,7 @@ function App() {
    
    const Cart = () => {
     return (
-      <Card style={{ width: '18rem' }}>
+      <Card style={{ width: '20rem' }}>
       <Card.Body>
         <Card.Title>Your Cart</Card.Title>
         <Card.Text>
@@ -218,10 +218,15 @@ function App() {
 
    const CartItem = (props) => {
     return (
-      <div className='d-flex'>
-        <Button value={props.name} onClick={decrement}>-</Button>
-        <h6>{plants[plants.indexOf(props.name) + 1]}x {props.name} ${props.price}</h6>
-        <Button value={props.name} onClick={increment}>+</Button>
+      <div className='d-flex align-items-center'>
+        <Button variant="danger"value={props.name} onClick={decrement}>-</Button>
+        <div className='mx-auto'>
+          <h6>{plants[plants.indexOf(props.name) + 1]}x {props.name} ${props.price}</h6>
+          </div>
+        <div className='ms-auto'>
+          <Button variant="success"value={props.name} onClick={increment}>+</Button>
+        </div>
+        
       </div>
     )
    }
