@@ -48,29 +48,32 @@ function App() {
      }
 
     return (
-      <Card style={{ width: '18rem', height: '20rem'}}>
-      <Card.Body>
-        <div className='d-flex justify-content-center'>
-          <Card.Img style={{width:'4rem', height: '6rem'}}variant="top" src="https://st.depositphotos.com/1055085/3389/i/450/depositphotos_33897773-stock-photo-artificial-tree.jpg" />
+      <div className='p-3'>
+        <Card className='shadow' border='light' style={{ width: '18rem', height: '20rem'}}>
+        <Card.Body>
+          <div className='d-flex justify-content-center'>
+            <Card.Img style={{width:'4rem', height: '6rem'}}variant="top" src="https://st.depositphotos.com/1055085/3389/i/450/depositphotos_33897773-stock-photo-artificial-tree.jpg" />
 
-        </div>
+          </div>
 
-        <Card.Title>{props.name}</Card.Title>
-        <Card.Text>
-          <div className='d-flex'>
-            <p>{props.size}</p>
-            <p className='ms-auto'>Height: {props.height}'</p>
-          </div>
-          <div className='d-flex'>
-            <p>Sunlight level: {props.sunlight}</p>
-            <p className='ms-auto'>{props.setting}</p>
-          </div>
-          
-          <h6>Price: ${props.price}</h6>
-        </Card.Text>
-        <Button onClick={addToCart} variant="success">Add to cart</Button>
-      </Card.Body>
-      </Card>
+          <Card.Title>{props.name}</Card.Title>
+          <Card.Text>
+            <div className='d-flex'>
+              <p>{props.size}</p>
+              <p className='ms-auto'>Height: {props.height}'</p>
+            </div>
+            <div className='d-flex'>
+              <p>Sunlight level: {props.sunlight}</p>
+              <p className='ms-auto'>{props.setting}</p>
+            </div>
+            
+            <h6>Price: ${props.price}</h6>
+          </Card.Text>
+          <Button onClick={addToCart} variant="success">Add to cart</Button>
+        </Card.Body>
+        </Card>
+      </div>
+      
     );
    }
 
