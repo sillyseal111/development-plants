@@ -77,10 +77,6 @@ function App() {
     );
    }
 
-  const selectAllFilters = (eventKey) => {
-    setSize(eventKey.target.value);
-    setSetting(eventKey.target.value);
-  }
   const selectFilterSize = (eventKey) => {
     setSize(eventKey.target.value);
   }
@@ -149,10 +145,10 @@ function App() {
       <div>
         <h5>Sort by:</h5>
         <div className='d-flex'>
-        <input type="radio" id="height" name="sortby" 
+        <input className='mx-2' type="radio" id="height" name="sortby" 
           value="height" checked={sortby === "height"} onChange={selectSortType}/>
         <label for="height">Height</label>
-        <input type="radio" id="sunlight" name="sortby" 
+        <input className='mx-2' type="radio" id="sunlight" name="sortby" 
           value="sunlight" checked={sortby === "sunlight"} onChange={selectSortType}/>
         <label for="sunlight">Sunlight</label>
       </div>
@@ -165,27 +161,30 @@ function App() {
     return (
       <div>
         <h5>Filter by: </h5>
-          <input type="radio" id="All" name="filters" 
-          value="All" checked={size === "All" && setting === "All"} onChange={selectAllFilters}/>
-          <label for="All">All</label>
         <h6>Size:</h6>
         <div className='d-flex'>
-          <input type="radio" id="Medium" name="sizeFilter" 
+          <input className='mx-2' type="radio" id="All" name="sizeFilter" 
+          value="All" checked={size==="All"} onChange={selectFilterSize}/>
+          <label for="All">All</label>
+          <input className='mx-2' type="radio" id="Medium" name="sizeFilter" 
           value="Medium" checked={size==="Medium"} onChange={selectFilterSize}/>
           <label for="Medium">Medium</label>
-          <input type="radio" id="Large" name="sizeFilter" 
+          <input className='mx-2' type="radio" id="Large" name="sizeFilter" 
           value="Large" checked={size==="Large"}onChange={selectFilterSize}/>
           <label for="Large">Large</label>
-          <input type="radio" id="Desktop" name="sizeFilter" 
+          <input className='mx-2' type="radio" id="Desktop" name="sizeFilter" 
           value="Desktop" checked={size==="Desktop"}onChange={selectFilterSize}/>
           <label for="Desktop">Desktop</label>
         </div>
         <h6>Setting:</h6>
         <div className='d-flex'>
-          <input type="radio" id="Indoor" name="settingFilter" 
+          <input className='mx-2' type="radio" id="All" name="settingFilter" 
+          value="All" checked={setting==="All"} onChange={selectFilterSetting}/>
+          <label for="All">All</label>
+          <input className='mx-2' type="radio" id="Indoor" name="settingFilter" 
           value="Indoor" checked={setting==="Indoor"}onChange={selectFilterSetting}/>
           <label for="Indoor">Indoor</label>
-          <input type="radio" id="Outdoor" name="settingFilter" 
+          <input className='mx-2' type="radio" id="Outdoor" name="settingFilter" 
           value="Outdoor" checked={setting==="Outdoor"}onChange={selectFilterSetting}/>
           <label for="Outdoor">Outdoor</label>
         </div>
@@ -303,8 +302,7 @@ function App() {
           <SortNav/>
           <Cart/>
         </div>
-      
-      <FinalFilter plants={finalList}/>
+        <FinalFilter plants={finalList}/>
       
       
       </div>
