@@ -2,6 +2,7 @@ import './App.css';
 import { useState } from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
+import { ListGroup } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
@@ -14,21 +15,21 @@ function App() {
   const [sortby, setSortby] = useState("height");
 
   const plantList = [
-    { name: "Cute Plant", size: "Medium", height: 1, sunlight: 3, price:7.25, setting:"Indoor", count: 0},
-    { name: "Happy Plant", size: "Large", height: 2, sunlight: 2, price: 3.50, setting: "Outdoor", count: 0},
-    { name: "Sad Plant", size: "Desktop", height: 3, sunlight: 1, price: 4.50, setting: "Indoor", count: 0},
-    { name: "Smart Plant", size: "Medium", height: 1, sunlight: 2, price: 5.75, setting: "Outdoor", count: 0},
-    { name: "Sleepy Plant", size: "Desktop", height: 3, sunlight: 1, price: 6.25, setting: "Indoor", count: 0},
-    { name: "Cute1 Plant", size: "Medium", height: 1, sunlight: 3, price:7.25, setting:"Indoor", count: 0},
-    { name: "Happy1 Plant", size: "Large", height: 2, sunlight: 2, price: 3.50, setting: "Outdoor", count: 0},
-    { name: "Sad1 Plant", size: "Desktop", height: 3, sunlight: 1, price: 4.50, setting: "Indoor", count: 0},
-    { name: "Smart1 Plant", size: "Medium", height: 1, sunlight: 2, price: 5.75, setting: "Outdoor", count: 0},
-    { name: "Sleepy1 Plant", size: "Desktop", height: 3, sunlight: 1, price: 6.25, setting: "Indoor", count: 0},
-    { name: "Cute2 Plant", size: "Medium", height: 1, sunlight: 3, price:7.25, setting:"Indoor", count: 0},
-    { name: "Happy2 Plant", size: "Large", height: 2, sunlight: 2, price: 3.50, setting: "Outdoor", count: 0},
-    { name: "Sad2 Plant", size: "Desktop", height: 3, sunlight: 1, price: 4.50, setting: "Indoor", count: 0},
-    { name: "Smart2 Plant", size: "Medium", height: 1, sunlight: 2, price: 5.75, setting: "Outdoor", count: 0},
-    { name: "Sleepy2 Plant", size: "Desktop", height: 3, sunlight: 1, price: 6.25, setting: "Indoor", count: 0}
+    { name: "Cute Plant", size: "Small", height: 1, sunlight: 3, price:7.25, setting:"Indoor", count: 0},
+    { name: "Happy Plant", size: "Medium", height: 3, sunlight: 2, price: 3.50, setting: "Outdoor", count: 0},
+    { name: "Sad Plant", size: "Large", height: 4, sunlight: 4, price: 4.50, setting: "Indoor", count: 0},
+    { name: "Smart Plant", size: "Small", height: 1, sunlight: 2, price: 5.75, setting: "Outdoor", count: 0},
+    { name: "Sleepy Plant", size: "Large", height: 4, sunlight: 1, price: 6.25, setting: "Indoor", count: 0},
+    { name: "Mad Plant", size: "Small", height: 1, sunlight: 4, price:7.25, setting:"Indoor", count: 0},
+    { name: "Goofy Plant", size: "Medium", height: 2, sunlight: 2, price: 3.50, setting: "Outdoor", count: 0},
+    { name: "Funny Plant", size: "Large", height: 6, sunlight: 5, price: 4.50, setting: "Indoor", count: 0},
+    { name: "Nerdy Plant", size: "Small", height: 1, sunlight: 2, price: 5.75, setting: "Outdoor", count: 0},
+    { name: "Bored Plant", size: "Large", height: 4, sunlight: 1, price: 6.25, setting: "Indoor", count: 0},
+    { name: "Pretty Plant", size: "Small", height: 1, sunlight: 3, price:7.25, setting:"Indoor", count: 0},
+    { name: "Excited Plant", size: "Medium", height: 2, sunlight: 5, price: 3.50, setting: "Outdoor", count: 0},
+    { name: "Tired Plant", size: "Large", height: 5, sunlight: 1, price: 4.50, setting: "Indoor", count: 0},
+    { name: "Spooky Plant", size: "Small", height: 1, sunlight: 2, price: 5.75, setting: "Outdoor", count: 0},
+    { name: "Neutral Plant", size: "Large", height: 4, sunlight: 6, price: 6.25, setting: "Indoor", count: 0}
    ]
 
    const Plant = (props) => {
@@ -49,7 +50,7 @@ function App() {
 
     return (
       <div className='p-3'>
-        <Card className='shadow' border='light' style={{ width: '18rem', height: '20rem'}}>
+        <Card className='shadow' border='light' style={{ width: '18rem', height: '25rem'}}>
         <Card.Body>
           <div className='d-flex justify-content-center'>
             <Card.Img style={{width:'4rem', height: '6rem'}}variant="top" src="https://st.depositphotos.com/1055085/3389/i/450/depositphotos_33897773-stock-photo-artificial-tree.jpg" />
@@ -58,14 +59,20 @@ function App() {
 
           <Card.Title>{props.name}</Card.Title>
           <Card.Text>
-            <div className='d-flex'>
-              <p>{props.size}</p>
-              <p className='ms-auto'>Height: {props.height}'</p>
+            {/* <div className='d-flex'>
+              <p>Size: {props.size}</p>
+              <p className='ms-auto'>Max Height: {props.height}'</p>
             </div>
             <div className='d-flex'>
               <p>Sunlight level: {props.sunlight}</p>
-              <p className='ms-auto'>{props.setting}</p>
-            </div>
+              <p className='ms-auto'>Setting: {props.setting}</p>
+            </div> */}
+            <ListGroup variant="flush">
+              <ListGroup.Item>Size: {props.size}</ListGroup.Item>
+              <ListGroup.Item>Max Height: {props.height}'</ListGroup.Item>
+              <ListGroup.Item>Sunlight level: {props.sunlight}</ListGroup.Item>
+              <ListGroup.Item>Setting: {props.setting}</ListGroup.Item>
+            </ListGroup>
             
             <h6>Price: ${props.price}</h6>
           </Card.Text>
@@ -166,15 +173,15 @@ function App() {
           <input className='mx-2' type="radio" id="All" name="sizeFilter" 
           value="All" checked={size==="All"} onChange={selectFilterSize}/>
           <label for="All">All</label>
+          <input className='mx-2' type="radio" id="Small" name="sizeFilter" 
+          value="Small" checked={size==="Small"} onChange={selectFilterSize}/>
+          <label for="Small">Small</label>
           <input className='mx-2' type="radio" id="Medium" name="sizeFilter" 
-          value="Medium" checked={size==="Medium"} onChange={selectFilterSize}/>
+          value="Medium" checked={size==="Medium"}onChange={selectFilterSize}/>
           <label for="Medium">Medium</label>
           <input className='mx-2' type="radio" id="Large" name="sizeFilter" 
           value="Large" checked={size==="Large"}onChange={selectFilterSize}/>
           <label for="Large">Large</label>
-          <input className='mx-2' type="radio" id="Desktop" name="sizeFilter" 
-          value="Desktop" checked={size==="Desktop"}onChange={selectFilterSize}/>
-          <label for="Desktop">Desktop</label>
         </div>
         <h6>Setting:</h6>
         <div className='d-flex'>
