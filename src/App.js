@@ -121,8 +121,10 @@ function App() {
    const sortPlants = (a,b) => {
     if (sortby === "height") {
       return a.height - b.height
-    } else {
+    } else if (sortby === "sunlight") {
       return a.sunlight - b.sunlight;
+    } else {
+      return a.price - b.price
     }
     
    }
@@ -158,6 +160,9 @@ function App() {
         <input className='mx-2' type="radio" id="sunlight" name="sortby" 
           value="sunlight" checked={sortby === "sunlight"} onChange={selectSortType}/>
         <label for="sunlight">Sunlight</label>
+        <input className='mx-2' type="radio" id="price" name="sortby" 
+          value="price" checked={sortby === "price"} onChange={selectSortType}/>
+        <label for="sunlight">Price</label>
       </div>
       </div>
       
